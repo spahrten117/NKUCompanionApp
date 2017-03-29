@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_calculator"
+            android:icon="@drawable/ic_calculator"
+            android:title="GPA Calculator" />
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_map"
+            android:title="NKU Map" />
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/ic_schedule"
+            android:title="My Schedule" />
+    </group>
+
+    <item android:title="Theming">
+        <menu>
+            <item
+                android:id="@+id/nav_dark_theme"
+                android:icon="@drawable/ic_dark_theme"
+                android:title="Dark Theme" />
+            <item
+                android:id="@+id/nav_light_theme"
+                android:icon="@drawable/ic_light_theme"
+                android:title="Light Theme" />
+        </menu>
+    </item>
+
+</menu>
