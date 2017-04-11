@@ -8,13 +8,36 @@
     tools:context="com.example.tope0_000.nkucompanionapp.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:paddingRight="5dp"
+        android:id="@+id/curved_arrow_image_view"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/curved_arrow_intro"
+        android:text="@string/curved_arrow_intro"
+        android:textSize="17sp"
+        android:paddingLeft="120dp"
+        app:layout_constraintLeft_toRightOf="@+id/curved_arrow_image_view"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/curved_arrow_image_view"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/intro_text"
+        android:id="@+id/mainText"
+        android:linksClickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/curved_arrow_image_view" />
 
 </android.support.constraint.ConstraintLayout>
