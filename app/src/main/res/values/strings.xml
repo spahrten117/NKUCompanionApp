@@ -16,4 +16,26 @@
 
     </string>
     <string name="curved_arrow_intro">Use to navigate and explore the app!!</string>
+    <string-array name="marker_array">
+        <item>Administrative Center</item>
+        <item>Baptist Student Center</item>
+        <item>BB&amp;T Arena</item>
+        <item>Business Academic Center</item>
+        <item>Campbell Hall</item>
+        <item>Ceramics &amp; Sculpture</item>
+        <item>Fine Arts Center</item>
+        <item>Founders Hall</item>
+        <item>Griffin Hall</item>
+        <item>Health Center</item>
+        <item>Landrum</item>
+        <item>Louie B. Nunn Hall</item>
+        <item>MEP Center</item>
+        <item>Regents Hall</item>
+        <item>Science Center</item>
+        <item>Soccer Stadium</item>
+        <item>Steely Library</item>
+        <item>Student Union</item>
+        <item>University Center</item>
+        <item>Welcome Center</item>
+    </string-array>
 </resources>
