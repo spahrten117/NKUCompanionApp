@@ -1,6 +1,7 @@
 package com.example.tope0_000.nkucompanionapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,11 +23,30 @@ public class MainActivity extends AppCompatActivity
 
     private ImageView curvedArrowImageView;
     private TextView mainText;
+    public boolean darkTheme = false;
+
+    // define the SharedPreferences object and editor
+    private SharedPreferences savedValues;
+    private SharedPreferences.Editor editor;
+
+    //define instance variables that should be saved
+    private boolean theme = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Get SharedPreferences object
+        savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
+
+        //Get theme saved value
+        darkTheme = savedValues.getBoolean("theme", false);
+
+        //Set Theme
+        if(darkTheme)
+            this.setTheme(R.style.AppTheme_dark);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         curvedArrowImageView = (ImageView) findViewById(R.id.curved_arrow_image_view);
         mainText = (TextView) findViewById(R.id.mainText);
@@ -88,6 +108,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        editor = savedValues.edit();
 
         if (id == R.id.nav_home) {
             // Handle the home action
@@ -95,16 +116,45 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_map) {
             startActivity(new Intent(this, MapsActivity.class));
+            return true;
         } else if (id == R.id.nav_schedule) {
+            startActivity(new Intent(this, ScheduleActivity.class));
+            return true;
 
         } else if (id == R.id.nav_dark_theme) {
+            darkTheme = true;
+            editor.putBoolean("theme", darkTheme);
+            editor.commit();
+            recreate();
+            return true;
 
         } else if (id == R.id.nav_light_theme) {
-
+            darkTheme = false;
+            editor.putBoolean("theme", darkTheme);
+            editor.commit();
+            recreate();
+            return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onPause() {
+        editor = savedValues.edit();
+        editor.putBoolean("theme", darkTheme);
+        editor.commit();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // get the instance variables
+        savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
+        darkTheme = savedValues.getBoolean("theme", false);
     }
 }

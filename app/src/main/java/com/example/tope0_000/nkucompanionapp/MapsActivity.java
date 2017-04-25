@@ -12,7 +12,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,35 +28,71 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, AdapterView.OnItemClickListener {
 
     private GoogleMap mMap;
     private final int MY_PERMISSIONS_REQUEST_LOCATION = 0;
     private Marker myMarker;
     private LocationManager locationManager;
+    public boolean darkTheme = false;
 
     //define variables for the widgets
     private Button mapTypeButton;
+    private ListView myListView;
 
     // define the SharedPreferences object and editor
     private SharedPreferences savedValues;
     private SharedPreferences.Editor editor;
 
     //define instance variables that should be saved
+    private boolean theme = false;
+
+    //LatLng for NKU Buildings
+    LatLng bBTArena = new LatLng(39.032034, -84.459153);
+    LatLng baptistStudentCenter = new LatLng(39.033246, -84.464406);
+    LatLng businessCenter = new LatLng(39.031008, -84.461603);
+    LatLng campbellHall = new LatLng(39.040920, -84.466870);
+    LatLng healthCenter = new LatLng(39.029204, -84.466098);
+    LatLng ceramicsSculpture = new LatLng(39.037325, -84.465011);
+    LatLng scienceCenter = new LatLng(39.032345, -84.466233);
+    LatLng fineArtsCenter = new LatLng(39.031231, -84.463723);
+    LatLng foundersHall = new LatLng(39.031727, -84.465101);
+    LatLng griffinHall = new LatLng(39.030917, -84.466684);
+    LatLng studentUnion = new LatLng(39.030163, -84.465417);
+    LatLng landrumCenter = new LatLng(39.032511, -84.464584);
+    LatLng nunnHall = new LatLng(39.030893, -84.464822);
+    LatLng administrativeCenter = new LatLng(39.029669, -84.463475);
+    LatLng mathPsycologyCenter = new LatLng(39.030032, -84.462601);
+    LatLng regentsHall = new LatLng(39.029369, -84.464968);
+    LatLng soccerStadium = new LatLng(39.032229, -84.457019);
+    LatLng universityCenter = new LatLng(39.030135, -84.463995);
+    LatLng steelyLibrary = new LatLng(39.031878, -84.463886);
+    LatLng welcomeCenter = new LatLng(39.032492, -84.460987);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
 
         //Get SharedPreferences object
         savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
 
+        //Get theme saved value
+        darkTheme = savedValues.getBoolean("theme", false);
+
+        //Set Theme
+        if(darkTheme)
+            this.setTheme(R.style.AppTheme_dark);
+
+        setContentView(R.layout.activity_maps);
+
         //Get references to the widgets
         mapTypeButton = (Button) findViewById(R.id.mapTypeButton);
+        myListView = (ListView) findViewById(R.id.listView);
+
 
         //Set the listeners
         mapTypeButton.setOnClickListener(this);
+        myListView.setOnItemClickListener(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -169,28 +208,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //LatLng for NKU Buildings
-        LatLng bBTArena = new LatLng(39.032034, -84.459153);
-        LatLng baptistStudentCenter = new LatLng(39.033246, -84.464406);
-        LatLng businessCenter = new LatLng(39.031008, -84.461603);
-        LatLng campbellHall = new LatLng(39.040920, -84.466870);
-        LatLng healthCenter = new LatLng(39.029204, -84.466098);
-        LatLng ceramicsSculpture = new LatLng(39.037325, -84.465011);
-        LatLng scienceCenter = new LatLng(39.032345, -84.466233);
-        LatLng fineArtsCenter = new LatLng(39.031231, -84.463723);
-        LatLng foundersHall = new LatLng(39.031727, -84.465101);
-        LatLng griffinHall = new LatLng(39.030917, -84.466684);
-        LatLng studentUnion = new LatLng(39.030163, -84.465417);
-        LatLng landrumCenter = new LatLng(39.032511, -84.464584);
-        LatLng nunnHall = new LatLng(39.030893, -84.464822);
-        LatLng administrativeCenter = new LatLng(39.029669, -84.463475);
-        LatLng mathPsycologyCenter = new LatLng(39.030032, -84.462601);
-        LatLng regentsHall = new LatLng(39.029369, -84.464968);
-        LatLng soccerStadium = new LatLng(39.032229, -84.457019);
-        LatLng universityCenter = new LatLng(39.030135, -84.463995);
-        LatLng steelyLibrary = new LatLng(39.031878, -84.463886);
-        LatLng welcomeCenter = new LatLng(39.032492, -84.460987);
-
+        /*
         //Add a marker for each NKU Building
         mMap.addMarker(new MarkerOptions().position(bBTArena).title("BB&T Arena"));
         mMap.addMarker(new MarkerOptions().position(baptistStudentCenter).title("Baptist Student Center"));
@@ -212,6 +230,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(universityCenter).title("University Center"));
         mMap.addMarker(new MarkerOptions().position(steelyLibrary).title("W. Frank Steely Library"));
         mMap.addMarker(new MarkerOptions().position(welcomeCenter).title("Welcome Center"));
+        */
 
 
         // Add a marker in Sydney and move the camera
@@ -263,5 +282,92 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         else
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String selectedFromList = myListView.getItemAtPosition(position).toString();
+        Toast.makeText(this, selectedFromList, Toast.LENGTH_SHORT).show();
+        if (myMarker != null)
+            myMarker.remove();
+        switch (selectedFromList) {
+            case "Administrative Center":
+                myMarker = mMap.addMarker(new MarkerOptions().position(administrativeCenter).title("Lucas Administrative Center"));
+                break;
+            case "Baptist Student Center":
+                myMarker = mMap.addMarker(new MarkerOptions().position(baptistStudentCenter).title("Baptist Student Center"));
+                break;
+            case "BB&T Arena":
+                myMarker = mMap.addMarker(new MarkerOptions().position(bBTArena).title("BB&T Arena"));
+                break;
+            case "Business Academic Center":
+                myMarker = mMap.addMarker(new MarkerOptions().position(businessCenter).title("Business Academic Center"));
+                break;
+            case "Campbell Hall":
+                myMarker = mMap.addMarker(new MarkerOptions().position(campbellHall).title("Campbell Hall"));
+                break;
+            case "Ceramics & Sculpture":
+                myMarker = mMap.addMarker(new MarkerOptions().position(ceramicsSculpture).title("Cermaics & Sculpture"));
+                break;
+            case "Fine Arts Center":
+                myMarker = mMap.addMarker(new MarkerOptions().position(fineArtsCenter).title("Fine Arts Center"));
+                break;
+            case "Founders Hall":
+                myMarker = mMap.addMarker(new MarkerOptions().position(foundersHall).title("Founders Hall"));
+                break;
+            case "Griffin Hall":
+                myMarker = mMap.addMarker(new MarkerOptions().position(griffinHall).title("Griffin Hall"));
+                break;
+            case "Health Center":
+                myMarker = mMap.addMarker(new MarkerOptions().position(healthCenter).title("A.D. Albright Health Center"));
+                break;
+            case "Landrum":
+                myMarker = mMap.addMarker(new MarkerOptions().position(landrumCenter).title("Landrum Academic Center"));
+                break;
+            case "Louie B. Nunn Hall":
+                myMarker = mMap.addMarker(new MarkerOptions().position(nunnHall).title("Louie B. Nunn Hall"));
+                break;
+            case "MEP Center":
+                myMarker = mMap.addMarker(new MarkerOptions().position(mathPsycologyCenter).title("Math-Education-Psychology Center"));
+                break;
+            case "Regents Hall":
+                myMarker = mMap.addMarker(new MarkerOptions().position(regentsHall).title("Regents Hall"));
+                break;
+            case "Science Center":
+                myMarker = mMap.addMarker(new MarkerOptions().position(scienceCenter).title("Dorothy Westerman Herrmann Natural Science Center"));
+                break;
+            case "Soccer Stadium":
+                myMarker = mMap.addMarker(new MarkerOptions().position(soccerStadium).title("Soccer Stadium"));
+                break;
+            case "Steely Library":
+                myMarker = mMap.addMarker(new MarkerOptions().position(steelyLibrary).title("W. Frank Steely Library"));
+                break;
+            case "Student Union":
+                myMarker = mMap.addMarker(new MarkerOptions().position(studentUnion).title("James C. and Rachel M. Votruba Student Union"));
+                break;
+            case "University Center":
+                myMarker = mMap.addMarker(new MarkerOptions().position(universityCenter).title("University Center"));
+                break;
+            case "Welcome Center":
+                myMarker = mMap.addMarker(new MarkerOptions().position(welcomeCenter).title("Welcome Center"));
+                break;
+        }
+    }
+
+    @Override
+    public void onPause() {
+        editor = savedValues.edit();
+        editor.putBoolean("theme", darkTheme);
+        editor.commit();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // get the instance variables
+        savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
+        darkTheme = savedValues.getBoolean("theme", false);
     }
 }
