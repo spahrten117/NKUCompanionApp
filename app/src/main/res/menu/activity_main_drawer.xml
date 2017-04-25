@@ -18,19 +18,14 @@
             android:id="@+id/nav_schedule"
             android:icon="@drawable/ic_schedule"
             android:title="My Schedule" />
+        <item
+            android:id="@+id/nav_dark_theme"
+            android:icon="@drawable/ic_dark_theme"
+            android:title="Dark Theme" />
+        <item
+            android:id="@+id/nav_light_theme"
+            android:icon="@drawable/ic_light_theme"
+            android:title="Light Theme" />
     </group>
-
-    <item android:title="Theming">
-        <menu>
-            <item
-                android:id="@+id/nav_dark_theme"
-                android:icon="@drawable/ic_dark_theme"
-                android:title="Dark Theme" />
-            <item
-                android:id="@+id/nav_light_theme"
-                android:icon="@drawable/ic_light_theme"
-                android:title="Light Theme" />
-        </menu>
-    </item>
 
 </menu>

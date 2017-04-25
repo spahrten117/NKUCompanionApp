@@ -34,6 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final int MY_PERMISSIONS_REQUEST_LOCATION = 0;
     private Marker myMarker;
     private LocationManager locationManager;
+    public boolean darkTheme = false;
 
     //define variables for the widgets
     private Button mapTypeButton;
@@ -44,6 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private SharedPreferences.Editor editor;
 
     //define instance variables that should be saved
+    private boolean theme = false;
 
     //LatLng for NKU Buildings
     LatLng bBTArena = new LatLng(39.032034, -84.459153);
@@ -70,10 +72,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
 
         //Get SharedPreferences object
         savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
+
+        //Get theme saved value
+        darkTheme = savedValues.getBoolean("theme", false);
+
+        //Set Theme
+        if(darkTheme)
+            this.setTheme(R.style.AppTheme_dark);
+
+        setContentView(R.layout.activity_maps);
 
         //Get references to the widgets
         mapTypeButton = (Button) findViewById(R.id.mapTypeButton);
@@ -342,5 +352,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 myMarker = mMap.addMarker(new MarkerOptions().position(welcomeCenter).title("Welcome Center"));
                 break;
         }
+    }
+
+    @Override
+    public void onPause() {
+        editor = savedValues.edit();
+        editor.putBoolean("theme", darkTheme);
+        editor.commit();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // get the instance variables
+        savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
+        darkTheme = savedValues.getBoolean("theme", false);
     }
 }

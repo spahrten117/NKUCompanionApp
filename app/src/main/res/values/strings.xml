@@ -7,12 +7,17 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">NKU Map</string>
     <string name="intro_text">
-        Welcome to the NKU Companion App!! \n\n
+        Welcome to the NKU Companion App!\n\n
         Within the app you will find many usefule tools such as:\n\n\t\t\t\t\t\t
         &#8226; GPA Calculator\n\t\t\t\t\t\t
         &#8226; NKU Map\n\t\t\t\t\t\t
-        &#8226; Class Schedule\n\n
-        <a href="https://learnonline.nku.edu/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_16_1">NKU Blackboard</a>
+        &#8226; Class Schedule\n\nHowever, not everything you need can be accessed through this app.
+        Please explore these helpful links to help you with your time at NKU:\n\n
+        \t<a href="https://learnonline.nku.edu/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_16_1">Blackboard</a>\n\n
+        \t<a href="https://mynku.nku.edu">myNKU</a>\n\n
+        \t<a href="http://www.nku.edu/calendars.html">Calendar</a>\n\n
+        \t<a href="http://directory.nku.edu/">Directory</a>
+
 
     </string>
     <string name="curved_arrow_intro">Use to navigate and explore the app!!</string>
