@@ -19,6 +19,8 @@
     <string name="mynku">myNKU</string>
     <string name="calendar">Calendar</string>
     <string name="directory">Directory</string>
+    <string name="action_about">About</string>
+    <string name="about">The NKU Companion App was created as a final project for CSC 415. Implementations include Google Maps Api, Navigation Drawer, and Theming. Code creation and implementation done by Nick Tope and Eric Spahr</string>
     <string-array name="marker_array">
         <item>Administrative Center</item>
         <item>Baptist Student Center</item>
