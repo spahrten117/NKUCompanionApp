@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -128,6 +129,8 @@ public class GpaCalculator extends AppCompatActivity implements OnClickListener,
             CustomListAdapter myListAdapter = new CustomListAdapter(this, myClasses);
             ListView classListView = (ListView) findViewById(R.id.classListView);
             classListView.setAdapter(myListAdapter);
+        }else{
+            Toast.makeText(getApplicationContext() , "Class was not added!", Toast.LENGTH_LONG).show();
         }
     }
 
