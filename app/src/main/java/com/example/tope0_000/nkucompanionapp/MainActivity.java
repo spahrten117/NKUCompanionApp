@@ -142,7 +142,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the home action
         } else if (id == R.id.nav_calculator) {
-
+            startActivity(new Intent(this, GpaCalculator.class));
+            return true;
         } else if (id == R.id.nav_map) {
             startActivity(new Intent(this, MapsActivity.class));
             return true;
