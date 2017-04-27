@@ -94,6 +94,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapTypeButton.setOnClickListener(this);
         myListView.setOnItemClickListener(this);
 
+        if(darkTheme) {
+            mapTypeButton.setBackgroundResource(R.drawable.button_dark);
+        }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
