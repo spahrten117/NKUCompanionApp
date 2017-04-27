@@ -13,14 +13,12 @@
         &#8226; NKU Map\n\t\t\t\t\t\t
         &#8226; Class Schedule\n\nHowever, not everything you need can be accessed through this app.
         Please explore these helpful links to help you with your time at NKU:\n\n
-        \t<a href="https://learnonline.nku.edu/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_16_1">Blackboard</a>\n\n
-        \t<a href="https://mynku.nku.edu">myNKU</a>\n\n
-        \t<a href="http://www.nku.edu/calendars.html">Calendar</a>\n\n
-        \t<a href="http://directory.nku.edu/">Directory</a>
-
-
     </string>
     <string name="curved_arrow_intro">Use to navigate and explore the app!!</string>
+    <string name="blackboard">Blackboard</string>
+    <string name="mynku">myNKU</string>
+    <string name="calendar">Calendar</string>
+    <string name="directory">Directory</string>
     <string-array name="marker_array">
         <item>Administrative Center</item>
         <item>Baptist Student Center</item>

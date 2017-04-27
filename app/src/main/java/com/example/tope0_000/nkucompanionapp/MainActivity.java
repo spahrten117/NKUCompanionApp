@@ -1,10 +1,16 @@
 package com.example.tope0_000.nkucompanionapp;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,15 +21,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ImageView curvedArrowImageView;
     private TextView mainText;
     public boolean darkTheme = false;
+    private Button blackboardButton;
+    private Button mynkuButton;
+    private Button calendarButton;
+    private Button directoryButton;
 
     // define the SharedPreferences object and editor
     private SharedPreferences savedValues;
@@ -43,15 +54,31 @@ public class MainActivity extends AppCompatActivity
         darkTheme = savedValues.getBoolean("theme", false);
 
         //Set Theme
-        if(darkTheme)
+        if(darkTheme) {
             this.setTheme(R.style.AppTheme_dark);
+        }
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         curvedArrowImageView = (ImageView) findViewById(R.id.curved_arrow_image_view);
         mainText = (TextView) findViewById(R.id.mainText);
         setSupportActionBar(toolbar);
+        blackboardButton = (Button) findViewById(R.id.blackboardButton);
+        mynkuButton = (Button) findViewById(R.id.mynkuButton);
+        calendarButton = (Button) findViewById(R.id.calendarButton);
+        directoryButton = (Button) findViewById(R.id.directoryButton);
 
+        blackboardButton.setOnClickListener(this);
+        mynkuButton.setOnClickListener(this);
+        calendarButton.setOnClickListener(this);
+        directoryButton.setOnClickListener(this);
+
+        if(darkTheme) {
+            blackboardButton.setBackgroundResource(R.drawable.button_dark);
+            mynkuButton.setBackgroundResource(R.drawable.button_dark);
+            calendarButton.setBackgroundResource(R.drawable.button_dark);
+            directoryButton.setBackgroundResource(R.drawable.button_dark);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,6 +94,8 @@ public class MainActivity extends AppCompatActivity
         curvedArrowImageView.setRotationY(180);
         curvedArrowImageView.setScaleY(0.8f);
         curvedArrowImageView.setScaleX(0.9f);
+        if(darkTheme)
+            curvedArrowImageView.setImageResource(R.drawable.curved_arrow_yellow);
 
         mainText.setMovementMethod(LinkMovementMethod.getInstance());
     }
@@ -157,5 +186,33 @@ public class MainActivity extends AppCompatActivity
         // get the instance variables
         savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
         darkTheme = savedValues.getBoolean("theme", false);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Uri uri;
+        Intent intent;
+        switch(v.getId()) {
+            case R.id.blackboardButton:
+                uri = Uri.parse("https://learnonline.nku.edu/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_16_1"); // missing 'http://' will cause crashed
+                intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                break;
+            case R.id.mynkuButton:
+                uri = Uri.parse("https://mynku.nku.edu"); // missing 'http://' will cause crashed
+                intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                break;
+            case R.id.calendarButton:
+                uri = Uri.parse("http://www.nku.edu/calendars.html"); // missing 'http://' will cause crashed
+                intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                break;
+            case R.id.directoryButton:
+                uri = Uri.parse("http://directory.nku.edu/"); // missing 'http://' will cause crashed
+                intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                break;
+        }
     }
 }
