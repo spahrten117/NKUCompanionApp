@@ -21,7 +21,12 @@ import java.util.ArrayList;
 
 public class GpaCalculator extends AppCompatActivity implements OnClickListener, AdapterView.OnItemSelectedListener{
 
-    SharedPreferences mSharedPreferences;
+    // define the SharedPreferences object and editor
+    private SharedPreferences savedValues;
+    private SharedPreferences.Editor editor;
+
+    //define instance variables that should be saved
+    private boolean theme = false;
 
     private EditText prevCredits;
     private EditText prevGpa;
@@ -31,12 +36,22 @@ public class GpaCalculator extends AppCompatActivity implements OnClickListener,
     private Button addCourse;
     private TextView finalGpa;
     private Spinner classGrade;
-    private SharedPreferences savedValues;
     private ArrayList<Class> myClasses = new ArrayList<Class>();
+    public boolean darkTheme = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
+
+        //Get theme saved value
+        darkTheme = savedValues.getBoolean("theme", false);
+
+        //Set Theme
+        if(darkTheme) {
+            this.setTheme(R.style.AppTheme_dark);
+        }
         setContentView(R.layout.gpacalc_activity);
 
         prevCredits = (EditText) findViewById(R.id.prevCredits);
@@ -52,12 +67,15 @@ public class GpaCalculator extends AppCompatActivity implements OnClickListener,
         calcGpa.setOnClickListener(this);
         classGrade.setOnItemSelectedListener(this);
 
+        if(darkTheme) {
+            calcGpa.setBackgroundResource(R.drawable.button_dark);
+            addCourse.setBackgroundResource(R.drawable.button_dark);
+        }
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.grades_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         classGrade.setAdapter(adapter);
-
-        savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
 
     }
 

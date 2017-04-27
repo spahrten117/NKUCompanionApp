@@ -159,7 +159,8 @@
                 android:text="Add Course"
                 android:textAlignment="center"
                 android:layout_margin="8dp"
-                android:id="@+id/addCourse"/>
+                android:id="@+id/addCourse"
+                android:background="@drawable/button"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -169,7 +170,8 @@
                 android:text="Calculate GPA"
                 android:textAlignment="center"
                 android:layout_margin="8dp"
-                android:id="@+id/calcGpa"/>
+                android:id="@+id/calcGpa"
+                android:background="@drawable/button"/>
 
         </LinearLayout>
 
