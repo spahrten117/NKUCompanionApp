@@ -114,22 +114,36 @@ public class GpaCalculator extends AppCompatActivity implements OnClickListener,
     }
 
     private void addAnotherCourse(){
-        String name = className.getText().toString();
-        String grade = classGrade.getSelectedItem().toString();
-        int credits = Integer.valueOf(classCredits.getText().toString());
+        if(className.getText() != null &&  !className.getText().toString().equals("")
+                && classGrade.getSelectedItem().toString() != null &&  !classGrade.getSelectedItem().toString().equals("")
+                && classCredits.getText() != null &&  !classCredits.getText().toString().equals(""))
+        {
+            String name = className.getText().toString();
+            String grade = classGrade.getSelectedItem().toString();
+            int credits = Integer.valueOf(classCredits.getText().toString());
 
-        Class myClass = new Class(name, grade, credits);
-        myClasses.add(myClass);
+            Class myClass = new Class(name, grade, credits);
+            myClasses.add(myClass);
 
-        CustomListAdapter myListAdapter = new CustomListAdapter(this, myClasses);
-        ListView classListView = (ListView) findViewById(R.id.classListView);
-        classListView.setAdapter(myListAdapter);
+            CustomListAdapter myListAdapter = new CustomListAdapter(this, myClasses);
+            ListView classListView = (ListView) findViewById(R.id.classListView);
+            classListView.setAdapter(myListAdapter);
+        }
     }
 
     private void calculateGpa(){
-        double oldgpa = Double.valueOf(prevGpa.getText().toString()),
-                oldcredits = Double.valueOf(prevCredits.getText().toString()),
-                credits, classGrade, classGp, currentGp, Gpa, totalCreds;
+        double oldgpa, oldcredits, credits, classGrade, classGp, currentGp, Gpa, totalCreds;
+        if(prevGpa.getText() != null  &&  !prevGpa.getText().toString().equals("")){
+            oldgpa = Double.valueOf(prevGpa.getText().toString());
+        }else{
+            oldgpa = 0.0;
+        }
+        if(prevCredits.getText() != null && !prevCredits.getText().toString().equals("")) {
+            oldcredits = Double.valueOf(prevCredits.getText().toString());
+        }else{
+            oldcredits = 0.0;
+        }
+
         totalCreds = oldcredits;
         currentGp = oldgpa * oldcredits;
         for(int i = 0; i < myClasses.size(); i++){
